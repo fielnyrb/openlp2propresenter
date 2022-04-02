@@ -23,6 +23,14 @@ namespace OpenLP2ProPresenter
         public MainWindow()
         {
             InitializeComponent();
+
+            IOpenLPDataSource openLPSource = new OpenLPSQLite();
+            ISongContentParser songParser = new XMLSongParser();
+
+            List<StructParsedSong> structParsedSongs = songParser.parseContent(openLPSource.getData());
+
+            ISongExporter songExporter = new ProPresenterFilesExporter();
+            songExporter.exportSongs(structParsedSongs);
         }
     }
 }
