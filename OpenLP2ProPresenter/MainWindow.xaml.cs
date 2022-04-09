@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace OpenLP2ProPresenter
 {
@@ -24,13 +13,22 @@ namespace OpenLP2ProPresenter
         {
             InitializeComponent();
 
-            IOpenLPDataSource openLPSource = new OpenLPSQLite();
-            ISongContentParser songParser = new XMLSongParser();
+            IOpenLPDataImporter openLPImporter = new OpenLPSQLiteImporter();
 
-            List<StructParsedSong> structParsedSongs = songParser.parseContent(openLPSource.getData());
+            TextGeneratorEffectComposite effectComposite = new();
+            EffectAddTitles effectAddTitles = new();
+            EffectRemoveSeparator effectRemoveSeparator = new();
 
-            ISongExporter songExporter = new ProPresenterFilesExporter();
-            songExporter.exportSongs(structParsedSongs);
+            effectComposite.AddComponent(effectAddTitles);
+            effectComposite.AddComponent(effectRemoveSeparator);
+
+            TextGenerator textGenerator = new(effectComposite);
+            IItemConverter itemConverter = new XMLConverter(textGenerator);
+
+            List<ProPresenterItem> structConvertedItems = itemConverter.convert(openLPImporter.getData());
+
+            IExporter proPresenterExporter = new ProPresenterFilesExporter();
+            proPresenterExporter.export(structConvertedItems);
         }
     }
 }

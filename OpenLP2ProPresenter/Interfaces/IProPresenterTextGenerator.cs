@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OpenLP2ProPresenter
 {
-    interface IOpenLPDataSource
+    interface IProPresenterTextGenerator
     {
-        List<StructUnparsedSong> getData();
+        String generate(IEnumerable<OpenLPVerse> verses);
     }
 }

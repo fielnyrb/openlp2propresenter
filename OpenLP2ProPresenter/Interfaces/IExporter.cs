@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OpenLP2ProPresenter
 {
-    interface ISongExporter
+    interface IExporter
     {
-        void exportSongs(List<StructParsedSong> parsedSongs);
+        void export(List<ProPresenterItem> parsedSongs);
     }
 }

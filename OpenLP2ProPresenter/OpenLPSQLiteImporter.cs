@@ -8,9 +8,9 @@ using System.Windows;
 
 namespace OpenLP2ProPresenter
 {
-    class OpenLPSQLite : IOpenLPDataSource
+    class OpenLPSQLiteImporter : IOpenLPDataImporter
     {
-        List<StructUnparsedSong> IOpenLPDataSource.getData()
+        List<OpenLPItem> IOpenLPDataImporter.getData()
         {
             SQLiteConnection sqlite_conn;
             sqlite_conn = CreateConnection();
@@ -37,14 +37,16 @@ namespace OpenLP2ProPresenter
         }
 
 
-        static List<StructUnparsedSong> ReadData(SQLiteConnection conn)
+        static List<OpenLPItem> ReadData(SQLiteConnection conn)
         {
             SQLiteDataReader dataReader;
             SQLiteCommand sqlite_cmd;
             sqlite_cmd = conn.CreateCommand();
             sqlite_cmd.CommandText = "SELECT * FROM songs";
 
-            List<StructUnparsedSong> songs = new List<StructUnparsedSong>();
+            List<OpenLPItem> songs = new List<OpenLPItem>();
+
+            
 
             dataReader = sqlite_cmd.ExecuteReader();
 
@@ -53,7 +55,7 @@ namespace OpenLP2ProPresenter
                 string title = dataReader.GetString(1);
                 string content = dataReader.GetString(3);
 
-                StructUnparsedSong song = new StructUnparsedSong(title, content);
+                OpenLPItem song = new OpenLPItem(title, content);
 
                 songs.Add(song);
             }

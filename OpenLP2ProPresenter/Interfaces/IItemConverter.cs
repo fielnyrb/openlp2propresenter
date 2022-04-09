@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OpenLP2ProPresenter
 {
-    interface ISongContentParser
+    interface IItemConverter
     {
-        List<StructParsedSong> parseContent(List<StructUnparsedSong> unparsedSongs);
+        List<ProPresenterItem> convert(List<OpenLPItem> unparsedSongs);
     }
 }

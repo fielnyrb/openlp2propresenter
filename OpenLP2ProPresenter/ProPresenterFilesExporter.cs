@@ -1,21 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace OpenLP2ProPresenter
 {
-    class ProPresenterFilesExporter : ISongExporter
+    class ProPresenterFilesExporter : IExporter
     {
-        public void exportSongs(List<StructParsedSong> parsedSongs)
+        public void export(List<ProPresenterItem> parsedItems)
         {
-            parsedSongs.ForEach(delegate(StructParsedSong song) {
+            parsedItems.ForEach(delegate(ProPresenterItem item) {
                 try
                 {
-                    File.WriteAllText("songs/" + song.Title + ".txt", song.Content);
+                    String fileName = "songs/" + item.Title + ".txt";
+
+                    if(!Directory.Exists("songs"))
+                    {
+                        Directory.CreateDirectory("songs");
+                    }
+
+                    if(File.Exists(fileName)) {
+                        fileName = "songs/" + item.Title + "(1).txt";
+                    }
+
+                    File.WriteAllText(fileName, "Title: " + item.Title + "\n\n" + item.Content);
                 }
                 catch (Exception ex)
                 {

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OpenLP2ProPresenter
 {
-    struct StructUnparsedSong
+    struct OpenLPItem
     {
-        public StructUnparsedSong(String title, String unparsedContent)
+        public OpenLPItem(String title, String unparsedContent)
         {
             Title = title;
             UnparsedContent = unparsedContent;

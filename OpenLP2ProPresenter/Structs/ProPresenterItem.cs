@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OpenLP2ProPresenter
 {
-    struct StructParsedSong
+    struct ProPresenterItem
     {
-        public StructParsedSong(String title, String content)
+        public ProPresenterItem(String title, String content)
         {
             Title = title;
             Content = content;
